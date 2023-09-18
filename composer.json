@@ -1,0 +1,46 @@
+{
+  "name": "kodeingatan/lodging",
+  "description": "kodeingatan lodging ",
+  "license": "MIT",
+  "type": "library",
+  "keywords": [
+    "admin"
+  ],
+  "autoload": {
+    "psr-4": {
+      "Kodeingatan\\Lodging\\": "src/"
+    }
+  },
+  "homepage": "https://kodeingatan.com",
+  "authors": [
+    {
+      "name": "Afdal",
+      "email": "afdal.develop@gmail.com",
+      "homepage": "https://kodeingatan.com",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": "^7.3|^8.0"
+  },
+  "require-dev": {
+    "orchestra/testbench": "5.*|6.*|^7.0",
+    "phpunit/phpunit": "^9.1"
+  },
+  "scripts": {
+    "test": "vendor/bin/phpunit --colors=always"
+  },
+  "suggest": {
+    "kodeingatan/lodging": "Kodeingatan lodging"
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Kodeingatan\\Lodging\\Provider\\LodgingServiceProvider"
+      ],
+      "aliases": {
+        "KILodging": "Kodeingatan\\Lodging\\Facades\\Lodging"
+      }
+    }
+  }
+}
