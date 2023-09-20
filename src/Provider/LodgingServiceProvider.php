@@ -6,8 +6,9 @@ use Illuminate\Routing\Router;
 use Kodeingatan\Lodging\Lodging;
 use Illuminate\Support\ServiceProvider;
 use Kodeingatan\Lodging\Console\Commands\AboutCommand;
-use Kodeingatan\Lodging\Console\Commands\InstallationCommand;
 use Kodeingatan\Lodging\Facades\Lodging as FacadesLodging;
+use Kodeingatan\Lodging\Console\Commands\InstallationCommand;
+use Kodeingatan\Lodging\Console\Commands\KiAdminLodgingPermissionCommand;
 
 class LodgingServiceProvider extends ServiceProvider
 {
@@ -55,6 +56,7 @@ class LodgingServiceProvider extends ServiceProvider
             $this->commands([
                 AboutCommand::class,
                 InstallationCommand::class,
+                KiAdminLodgingPermissionCommand::class,
             ]);
         }
     }

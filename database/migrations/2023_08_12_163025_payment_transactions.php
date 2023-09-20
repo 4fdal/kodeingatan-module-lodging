@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('payment_transactions', function (Blueprint $table) {
             $table->id();
+            $table->string('key')->unique();
 
             $table->unsignedBigInteger('reservation_id');
 

@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('service_usages', function (Blueprint $table) {
             $table->id();
+            $table->string('key')->unique();
 
             $table->unsignedBigInteger('additional_service_id');
             $table->unsignedBigInteger('reservation_id');

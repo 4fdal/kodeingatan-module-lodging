@@ -13,7 +13,7 @@ class AboutCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'kilodging:about';
+    protected $signature = 'kiadmin.lodging:about';
 
     /**
      * The console command description.

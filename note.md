@@ -46,15 +46,6 @@ Rancangan database untuk sistem penginapan dengan akhiran tercipta bill pelangga
    - Pajak
    - Total Tagihan
 
-4. **Tabel Tagihan (Invoice)**
-   - Tabel ini akan menyimpan informasi tentang tagihan yang dibuat untuk setiap pemesanan.
-   - Kolom-kolom mungkin termasuk:
-     - ID Tagihan (Primary Key)
-     - ID Reservasi (Foreign Key mengacu ke Tabel Reservasi)
-     - Total Biaya
-     - Pajak
-     - Total Tagihan
-     - Metode Pembayaran (misalnya, Kartu Kredit, Debit, Tunai)
 
 Dalam desain database ini, setiap tabel memiliki kunci utama (Primary Key) untuk mengidentifikasi catatan unik dalam tabel tersebut. Tabel-tabel tersebut saling terhubung melalui kunci asing (Foreign Key) untuk menghubungkan data yang relevan di antara mereka.
 

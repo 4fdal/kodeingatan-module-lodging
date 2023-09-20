@@ -1,7 +1,7 @@
 <?php
 
 
-$module_name = "kilodging";
+$module_name = "kiadmin.lodging";
 $module_url = "packages/kodeingatan/lodging";
 $module_provider_class = "Kodeingatan\\Lodging\\Provider\\LodgingServiceProvider::class";
 $project_path =  __DIR__ . "/../../../";
@@ -35,4 +35,9 @@ if (!strpos($default_provider[0], $module_provider_class)) {
 
 file_put_contents($project_composer_json_path, json_encode($composer_json));
 
-system("cd ../../../ && composer update && php artisan $module_name:about");
+system(<<<CMD
+    cd ../../../ && 
+    composer update && 
+    php artisan {$module_name}:install && 
+    php artisan {$module_name}:about
+CMD);

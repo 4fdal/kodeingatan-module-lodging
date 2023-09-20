@@ -15,7 +15,7 @@ class InstallationCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'kilodging:install {--force=false}';
+    protected $signature = 'kiadmin.lodging:install {--force=false}';
 
     /**
      * The console command description.
@@ -33,13 +33,33 @@ class InstallationCommand extends Command
     {
         $this->initCommandParams();
         $this->publishConfigs();
+        $this->migrationTable();
+        $this->generateAdminPermission();
 
+        $this->info('finish installation module');
         return Command::SUCCESS;
     }
+
 
     public function initCommandParams()
     {
         $this->force = $this->options()['force'] == 'true' || $this->options()['force'] == null;
+    }
+
+    public function migrationTable()
+    {
+        \Artisan::call('migrate');
+        $this->info('Migrate table success');
+    }
+
+    public function generateAdminPermission()
+    {
+        $role_name = 'admin';
+        $users = \App\Models\User::role($role_name)->get();
+        foreach ($users as $key => $user) {
+            KiAdminLodgingPermissionCommand::make($user->email, $role_name);
+        }
+        $this->info('Generate admin permission success');
     }
 
     public function publishConfigs()
@@ -50,7 +70,6 @@ class InstallationCommand extends Command
             '--force' => $this->force,
         ];
         $this->call('vendor:publish', $command_params);
-
-        $this->info('finish installation module');
+        $this->info('Publish lodging configs success');
     }
 }
