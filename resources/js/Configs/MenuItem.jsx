@@ -13,7 +13,7 @@ export default [
     label: 'Penginapan',
     title: 'Penginapan',
     icon: <HomeOutlined />,
-    add_active_route: ['admin.master', 'admin.lodging.room.index'],
+    add_active_route: ['admin.master', 'admin.room_type.index'],
     children: [
       {
         key: 'admin.master',
@@ -21,11 +21,11 @@ export default [
         label: 'Master',
         title: 'Master',
         icon: <HddOutlined />,
-        add_active_route: ['admin.lodging.room.index'],
+        add_active_route: ['admin.room_type.index'],
         children: [
           {
             icon: <MinusOutlined />,
-            key: 'admin.lodging.room_type.index',
+            key: 'admin.room_type.index',
             permission: 'room_type.browse',
             label: 'Tipe Kamar',
             title: 'Tipe Kamar',

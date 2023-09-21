@@ -18,10 +18,11 @@ class RoomTypeController extends BaseCRUDController
             'page_active_label' => 'Tipe Kamar',
             'page_title' => 'Browse Tipe Kamar',
             'table_title' => 'Table Tipe Kamar',
+            'browse_label' => 'Tipe Kamar',
         ];
     }
 
-    protected function getBrowseColumns(): array
+    public static function getBrowseColumns(): array
     {
         return [
             [
@@ -56,10 +57,28 @@ class RoomTypeController extends BaseCRUDController
     public static function formCreate(): object
     {
         return (object)[
-            'title' => 'Tambahkan Tipe Kamar',
+            'title' => 'Form penambahan tipe kamar',
             'fields' => [
-                ['type' => 'text', 'name' => 'name', 'label' => 'Nama', 'placeholder' => 'Nama', 'value' => null],
-                ['type' => 'textarea', 'name' => 'description', 'label' => 'Description', 'placeholder' => 'Description', 'value' => null],
+                [
+                    'type' => 'text',
+                    'name' => 'name',
+                    'label' => 'Nama',
+                    'placeholder' => 'Nama',
+                    'value' => null,
+                    'options' => [
+                        'tooltip' => 'Nama atau nomor kamar yang disewakan'
+                    ]
+                ],
+                [
+                    'type' => 'textarea',
+                    'name' => 'description',
+                    'label' => 'Description',
+                    'placeholder' => 'Description',
+                    'value' => null,
+                    'options' => [
+                        'tooltip' => 'Deskripsi kamar yang disekawan',
+                    ]
+                ],
             ],
             // 'relations' => [
             //     'table_name' => Model::formCreate,
@@ -72,6 +91,7 @@ class RoomTypeController extends BaseCRUDController
         return (object) [
             'page_active_label' => 'Tipe Kamar',
             'page_title' => "Tambahkan Tipe Kamar",
+            'card_title' => "Form tambahkan tipe kamar",
         ];
     }
 
@@ -104,10 +124,72 @@ class RoomTypeController extends BaseCRUDController
         ]);
     }
 
+    protected function getShowOptions($model): object
+    {
+        return (object) [
+            'page_active_label' => 'Detail Tipe Kamar',
+            'page_title' => "Detail Tipe Kamar",
+            'browse_label' => 'Tipe Kamar',
+        ];
+    }
+
+    public static function showColumn($model): array
+    {
+        return (array)[
+            ['title' => 'Nama', 'dataIndex' => 'name', 'type' => 'text'],
+            ['title' => 'Deskripsi', 'dataIndex' => 'description', 'type' => 'text'],
+            ['title' => 'Created At', 'dataIndex' => 'created_at', 'type' => 'text'],
+            ['title' => 'Updated At', 'dataIndex' => 'updated_at', 'type' => 'text'],
+        ];
+    }
+
     protected function modelShowRelation($model)
     {
         return $model;
     }
+
+    public static function formUpdate($model): object
+    {
+        return (object)[
+            'title' => "Form edit tipe kamar `{$model->name}`",
+            'fields' => [
+                [
+                    'type' => 'text',
+                    'name' => 'name',
+                    'label' => 'Nama',
+                    'placeholder' => 'Nama',
+                    'value' => $model->name,
+                    'options' => [
+                        'tooltip' => 'Nama atau nomor kamar yang disewakan'
+                    ]
+                ],
+                [
+                    'type' => 'textarea',
+                    'name' => 'description',
+                    'label' => 'Description',
+                    'placeholder' => 'Description',
+                    'value' => $model->description,
+                    'options' => [
+                        'tooltip' => 'Deskripsi kamar yang disekawan',
+                    ]
+                ],
+            ],
+            // 'relations' => [
+            //     'table_name' => Model::formCreate,
+            // ]
+        ];
+    }
+
+    protected function getUpdateOptions($model): object
+    {
+        return (object) [
+            'page_active_label' => 'Tipe Kamar',
+            'page_title' => "Edit Tipe Kamar `{$model->name}`",
+            'card_title' => "Form edit `{$model->name}`",
+            'browse_label' => 'Tipe Kamar',
+        ];
+    }
+
 
     protected function getDataUpdate(Request $request, $model): array
     {
@@ -118,5 +200,15 @@ class RoomTypeController extends BaseCRUDController
 
     protected function handleAfterUpdate(Request $request, $model): void
     {
+    }
+
+    public static function getBrowseRecycleColumns(): array
+    {
+        return self::getBrowseColumns();
+    }
+
+    public static function showColumnRecycle($model): array
+    {
+        return self::showColumn($model);
     }
 }
