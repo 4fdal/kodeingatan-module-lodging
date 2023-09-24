@@ -36,6 +36,7 @@ class RoomController extends BaseCRUDController
                 ]
             ],
             [
+                'type' => 'relation',
                 'title' => 'Tipe Ruangan',
                 'dataIndex' => 'room_types.name',
                 'key' => 'room_types.name',
@@ -44,11 +45,14 @@ class RoomController extends BaseCRUDController
                     'placeholder' => 'Search nama...',
                     'field' => 'room_types.name'
                 ],
-                'relation' => [
-                    'foreign_key' => 'room_type_id',
-                ],
+                'options' => [
+                    'relation' => [
+                        'foreign_key' => 'room_type_id',
+                    ],
+                ]
             ],
             [
+                'type' => 'currency',
                 'title' => 'Harga per Malam',
                 'dataIndex' => 'price_per_night',
                 'key' => 'price_per_night',
@@ -59,14 +63,11 @@ class RoomController extends BaseCRUDController
                 ]
             ],
             [
+                'type' => 'boolean',
                 'title' => 'Ketersediaan',
                 'dataIndex' => 'availability',
                 'key' => 'availability',
                 'order' => 'availability',
-                'search' => [
-                    'placeholder' => 'Search nama...',
-                    'field' => 'availability'
-                ]
             ],
             [
                 'title' => 'Deskripsi',
@@ -79,6 +80,7 @@ class RoomController extends BaseCRUDController
                 ]
             ],
             [
+                'type' => 'timestamp',
                 'title' => 'Created At',
                 'dataIndex' => 'created_at',
                 'key' => 'created_at',
@@ -123,7 +125,7 @@ class RoomController extends BaseCRUDController
                                     'create' => 'Tambahkan tipe kamar baru',
                                     'edit' => 'Edit tipe kamar :name'
                                 ],
-                                'fields' => RoomTypeController::formCreate(),
+                                'fields' => RoomTypeController::formCreate()->fields,
                             ],
                             'urls' => [
                                 'browse' => ['GET', route('admin.room_type.index', [
@@ -182,19 +184,14 @@ class RoomController extends BaseCRUDController
 
     protected function handleStoreValidate(Request $request): void
     {
+
         $request->validate([
             'name' => ['required', 'unique:rooms,name'],
+            'room_type_id' => ['required',],
+            'price_per_night' => ['required', 'numeric'],
+            'availability' => ['required', 'boolean'],
             'description' => ['required'],
         ]);
-    }
-
-    protected function getDataStore(Request $request): array
-    {
-
-        $data = $request->only(['name', 'description']);
-        $data['key'] = \Str::uuid();
-
-        return $data;
     }
 
     protected function handleAfterStore(Request $request, $model): void
@@ -204,7 +201,7 @@ class RoomController extends BaseCRUDController
     protected function handleUpdateValidate(Request $request, $model): void
     {
         $request->validate([
-            'name' => ['required', 'unique:roles,name,' . $model->id],
+            'name' => ['required', 'unique:rooms,name,' . $model->id],
             'room_type_id' => ['required', 'exists:room_types,id'],
             'price_per_night' => ['required', 'numeric'],
             'availability' => ['required', 'boolean'],
@@ -231,15 +228,10 @@ class RoomController extends BaseCRUDController
         ];
     }
 
-    protected function modelShowRelation($model)
-    {
-        return $model;
-    }
-
     public static function formUpdate($model): object
     {
         return (object)[
-            'title' => "Form edit kamar `{$model->name}`",
+            'title' => 'Form penambahan kamar',
             'fields' => [
                 [
                     'type' => 'text',
@@ -252,19 +244,71 @@ class RoomController extends BaseCRUDController
                     ]
                 ],
                 [
+                    'type' => 'table_select',
+                    'name' => 'room_type_id',
+                    'label' => 'Tipe kamar',
+                    'placeholder' => 'Tipe kamar',
+                    'value' => $model->room_type_id,
+                    'options' => [
+                        'tooltip' => 'Tipe kamar yang disewakan',
+                        'table_select' => [
+                            'multiple' => false,
+                            'field_selected' => [
+                                'value' => 'id',
+                                'label' => 'name',
+                            ],
+                            'title' => 'Pilih tipe kamar',
+                            'columns' => RoomTypeController::getBrowseColumns(),
+                            'form' => [
+                                'title' => [
+                                    'create' => 'Tambahkan tipe kamar baru',
+                                    'edit' => 'Edit tipe kamar :name'
+                                ],
+                                'fields' => RoomTypeController::formCreate()->fields,
+                            ],
+                            'urls' => [
+                                'browse' => ['GET', route('admin.room_type.index', [
+                                    'per_page' => 'all',
+                                    'select' => 'all',
+                                ])],
+                                'store' => ['POST', route('admin.room_type.store')],
+                                'update' => ['POST', route('admin.room_type.update', ':key')],
+                                'delete' => ['DELETE', route('admin.room_type.delete', ':key')],
+                            ]
+                        ]
+                    ]
+                ],
+                [
+                    'type' => 'currency',
+                    'name' => 'price_per_night',
+                    'label' => 'Harga kamar per malam',
+                    'placeholder' => 'Harga kamar per malam',
+                    'value' => $model->price_per_night,
+                    'options' => [
+                        'tooltip' => 'Harga kamar per malam yang disewakan'
+                    ]
+                ],
+                [
+                    'type' => 'switch',
+                    'name' => 'availability',
+                    'label' => 'Ketersediaan kamar',
+                    'placeholder' => 'Ketersediaan kamar',
+                    'value' => $model->availability,
+                    'options' => [
+                        'tooltip' => 'Ketersediaan kamar yang disewakan'
+                    ]
+                ],
+                [
                     'type' => 'textarea',
                     'name' => 'description',
-                    'label' => 'Description',
-                    'placeholder' => 'Description',
+                    'label' => 'Deskripsi kamar',
+                    'placeholder' => 'Deskripsi kamar',
                     'value' => $model->description,
                     'options' => [
                         'tooltip' => 'Deskripsi kamar yang disekawan',
                     ]
                 ],
             ],
-            // 'relations' => [
-            //     'table_name' => Model::formCreate,
-            // ]
         ];
     }
 
@@ -276,14 +320,6 @@ class RoomController extends BaseCRUDController
             'card_title' => "Form edit `{$model->name}`",
             'browse_label' => 'Kamar',
         ];
-    }
-
-
-    protected function getDataUpdate(Request $request, $model): array
-    {
-        $data = $request->only(['name', 'description']);
-
-        return $data;
     }
 
     protected function handleAfterUpdate(Request $request, $model): void
