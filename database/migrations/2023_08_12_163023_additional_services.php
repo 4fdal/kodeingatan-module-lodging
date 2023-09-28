@@ -15,8 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('key')->unique();
 
+            $table->text('photos')->nullable();
+
             $table->string('name');
             $table->double('price');
+
+            $table->text('description');
 
             $table->timestamps();
             $table->timestamp('deleted_at')->nullable();

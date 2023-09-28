@@ -1,9 +1,4 @@
-import {
-  HddOutlined,
-  HomeOutlined,
-  MinusOutlined,
-  RightOutlined,
-} from '@ant-design/icons';
+import { HddOutlined, HomeOutlined, MinusOutlined } from '@ant-design/icons';
 import React from 'react';
 
 export default [
@@ -37,6 +32,15 @@ export default [
             label: 'Kamar',
             title: 'Kamar',
             as: 'admin.room.',
+            add_active_route: [],
+          },
+          {
+            icon: <MinusOutlined />,
+            key: 'admin.additional_service.index',
+            permission: 'additional_service.browse',
+            label: 'Layanan',
+            title: 'Layanan',
+            as: 'admin.additional_service.',
             add_active_route: [],
           },
         ],

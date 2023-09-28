@@ -10,4 +10,12 @@ class AdditionalService extends Model
     use HasFactory;
 
     protected $table = "additional_services";
+    protected $fillable = [
+        'id',
+        'key',
+        'photos',
+        'name',
+        'price',
+        'description',
+    ];
 }

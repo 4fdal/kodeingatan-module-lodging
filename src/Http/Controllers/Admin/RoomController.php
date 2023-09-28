@@ -28,7 +28,7 @@ class RoomController extends BaseCRUDController
             [
                 'type' => 'image',
                 'title' => 'Foto',
-                'dataIndex' => 'photo',
+                'dataIndex' => 'photos',
                 'key' => 'photo',
             ],
             [
@@ -102,13 +102,16 @@ class RoomController extends BaseCRUDController
             'fields' => [
                 [
                     'type' => 'image',
-                    'name' => 'photo',
+                    'name' => 'photos',
                     'label' => 'Photo',
                     'label' => 'Photo',
                     'placeholder' => 'Photo',
                     'value' => null,
                     'options' => [
-                        'tooltip' => 'Photo kamar yang disewakan'
+                        'tooltip' => 'Photo kamar yang disewakan',
+                        'image' => [
+                            'multiple' => true
+                        ]
                     ]
                 ],
                 [
@@ -238,7 +241,7 @@ class RoomController extends BaseCRUDController
     public static function showColumn($model): array
     {
         return (array)[
-            ['title' => 'Foto', 'dataIndex' => 'photo', 'type' => 'image'],
+            ['title' => 'Foto', 'dataIndex' => 'photos', 'type' => 'image'],
             ['title' => 'Nama', 'dataIndex' => 'name', 'type' => 'text'],
             ['title' => 'Kamar', 'dataIndex' => 'room_type_id', 'type' => 'table_browse', 'options' => [
                 'table_browse' => [
@@ -274,13 +277,16 @@ class RoomController extends BaseCRUDController
             'fields' => [
                 [
                     'type' => 'image',
-                    'name' => 'photo',
+                    'name' => 'photos',
                     'label' => 'Photo',
                     'label' => 'Photo',
                     'placeholder' => 'Photo',
                     'value' => $model->photo,
                     'options' => [
-                        'tooltip' => 'Photo kamar yang disewakan'
+                        'tooltip' => 'Photo kamar yang disewakan',
+                        'image' => [
+                            'multiple' => true,
+                        ]
                     ]
                 ],
                 [
