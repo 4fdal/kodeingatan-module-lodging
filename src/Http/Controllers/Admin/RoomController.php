@@ -26,6 +26,12 @@ class RoomController extends BaseCRUDController
     {
         return [
             [
+                'type' => 'image',
+                'title' => 'Foto',
+                'dataIndex' => 'photo',
+                'key' => 'photo',
+            ],
+            [
                 'title' => 'Nama',
                 'dataIndex' => 'name',
                 'key' => 'name',
@@ -94,6 +100,17 @@ class RoomController extends BaseCRUDController
         return (object)[
             'title' => 'Form penambahan kamar',
             'fields' => [
+                [
+                    'type' => 'image',
+                    'name' => 'photo',
+                    'label' => 'Photo',
+                    'label' => 'Photo',
+                    'placeholder' => 'Photo',
+                    'value' => null,
+                    'options' => [
+                        'tooltip' => 'Photo kamar yang disewakan'
+                    ]
+                ],
                 [
                     'type' => 'text',
                     'name' => 'name',
@@ -221,10 +238,32 @@ class RoomController extends BaseCRUDController
     public static function showColumn($model): array
     {
         return (array)[
+            ['title' => 'Foto', 'dataIndex' => 'photo', 'type' => 'image'],
             ['title' => 'Nama', 'dataIndex' => 'name', 'type' => 'text'],
+            ['title' => 'Kamar', 'dataIndex' => 'room_type_id', 'type' => 'table_browse', 'options' => [
+                'table_browse' => [
+                    'columns' => RoomTypeController::getBrowseColumns(),
+                    'urls' => [
+                        'browse' => ['GET', route('admin.room_type.index', [
+                            'select' => 'all',
+                            'per_page' => 'all',
+                            'search' => [
+                                'id' => ":room_type_id"
+                            ]
+                        ])]
+                    ],
+                    'redirect_urls' => [
+                        'show' => route('admin.room_type.show', [
+                            'key' => ":key",
+                        ])
+                    ]
+                ]
+            ]],
+            ['title' => 'Harga per malam', 'dataIndex' => 'price_per_night', 'type' => 'currency'],
+            ['title' => 'Ketersediaan', 'dataIndex' => 'availability', 'type' => 'boolean'],
             ['title' => 'Deskripsi', 'dataIndex' => 'description', 'type' => 'text'],
-            ['title' => 'Created At', 'dataIndex' => 'created_at', 'type' => 'text'],
-            ['title' => 'Updated At', 'dataIndex' => 'updated_at', 'type' => 'text'],
+            ['title' => 'Created At', 'dataIndex' => 'created_at', 'type' => 'timestamp'],
+            ['title' => 'Updated At', 'dataIndex' => 'updated_at', 'type' => 'timestamp'],
         ];
     }
 
@@ -233,6 +272,17 @@ class RoomController extends BaseCRUDController
         return (object)[
             'title' => 'Form penambahan kamar',
             'fields' => [
+                [
+                    'type' => 'image',
+                    'name' => 'photo',
+                    'label' => 'Photo',
+                    'label' => 'Photo',
+                    'placeholder' => 'Photo',
+                    'value' => $model->photo,
+                    'options' => [
+                        'tooltip' => 'Photo kamar yang disewakan'
+                    ]
+                ],
                 [
                     'type' => 'text',
                     'name' => 'name',
