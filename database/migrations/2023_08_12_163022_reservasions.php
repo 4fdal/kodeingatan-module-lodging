@@ -18,6 +18,8 @@ return new class extends Migration
             $table->unsignedBigInteger('customer_id');
             $table->unsignedBigInteger('room_id');
 
+            $table->integer('total_stay_days')->default(1);
+
             $table->date('checkin_date');
             $table->date('checkout_date');
 

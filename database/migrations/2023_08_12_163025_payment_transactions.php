@@ -17,7 +17,7 @@ return new class extends Migration
 
             $table->unsignedBigInteger('reservation_id');
 
-            $table->date('transaction_data');
+            $table->date('transaction_date');
             $table->string('payment_method')->nullable();
 
             $table->double('total_cost')->nullable();
