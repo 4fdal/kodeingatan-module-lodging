@@ -4,10 +4,12 @@ namespace Kodeingatan\Lodging\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ServiceUsage extends Model
 {
     use HasFactory;
+    use SoftDeletes;
 
     protected $table = "service_usages";
     protected $fillable = [
@@ -18,6 +20,7 @@ class ServiceUsage extends Model
         'number_of_uses',
         'total_service_cost',
     ];
+    protected $dates = ['deleted_at'];
 
     public function additionService()
     {

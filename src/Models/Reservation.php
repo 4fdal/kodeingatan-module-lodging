@@ -4,10 +4,12 @@ namespace Kodeingatan\Lodging\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Reservation extends Model
 {
     use HasFactory;
+    use SoftDeletes;
 
     protected $table = "reservations";
     protected $fillable = [
@@ -21,6 +23,7 @@ class Reservation extends Model
         'status',
         'payment_status',
     ];
+    protected $dates = ['deleted_at'];
 
     public function room()
     {

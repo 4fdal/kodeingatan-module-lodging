@@ -90,18 +90,46 @@ class ReservationController extends BaseCRUDController
                 ],
             ],
             [
-                'type' => 'text',
+                'type' => 'badge',
                 'title' => 'Status',
                 'dataIndex' => 'status',
                 'key' => 'status',
                 'order' => 'status',
+                'options' => [
+                    'badge' => [
+                        'value' => [
+                            'process' => [
+                                'color' => 'red',
+                                'label' => 'PROSES',
+                            ],
+                            'done' => [
+                                'color' => 'lightgreen',
+                                'label' => 'SELESAI',
+                            ]
+                        ],
+                    ]
+                ]
             ],
             [
-                'type' => 'text',
+                'type' => 'badge',
                 'title' => 'Status Pembayaran',
                 'dataIndex' => 'payment_status',
                 'key' => 'payment_status',
                 'order' => 'payment_status',
+                'options' => [
+                    'badge' => [
+                        'value' => [
+                            'process' => [
+                                'color' => 'red',
+                                'label' => 'PROSES',
+                            ],
+                            'done' => [
+                                'color' => 'lightgreen',
+                                'label' => 'SELESAI',
+                            ]
+                        ],
+                    ]
+                ]
             ],
             [
                 'type' => 'timestamp',
@@ -223,7 +251,7 @@ class ReservationController extends BaseCRUDController
                     'name' => 'status',
                     'label' => 'Status',
                     'placeholder' => 'Status',
-                    'value' => null,
+                    'value' => 'process',
                     'options' => [
                         'tooltip' => 'Status yang disewakan',
                         'select' => [
@@ -239,7 +267,7 @@ class ReservationController extends BaseCRUDController
                     'name' => 'payment_status',
                     'label' => 'Status Pembayaran',
                     'placeholder' => 'Status Pembayaran',
-                    'value' => null,
+                    'value' => 'process',
                     'options' => [
                         'tooltip' => 'Status pembayaran yang disewakan',
                         'select' => [
@@ -298,7 +326,7 @@ class ReservationController extends BaseCRUDController
     protected function getShowOptions($model): object
     {
         return (object) [
-            'page_active_label' => 'Detail Reservasi',
+            'page_active_label' => 'Detail',
             'page_title' => "Detail Reservasi",
             'browse_label' => 'Reservasi',
         ];
@@ -326,7 +354,7 @@ class ReservationController extends BaseCRUDController
                     ]
                 ]
             ]],
-            ['title' => 'Reservasi', 'dataIndex' => 'room_id', 'type' => 'table_browse', 'options' => [
+            ['title' => 'Kamar', 'dataIndex' => 'room_id', 'type' => 'table_browse', 'options' => [
                 'table_browse' => [
                     'columns' => RoomController::getBrowseColumns(),
                     'urls' => [
@@ -348,8 +376,34 @@ class ReservationController extends BaseCRUDController
             ['title' => 'Lama Menginap', 'dataIndex' => 'total_stay_days', 'type' => 'number'],
             ['title' => 'Tanggal Checkin', 'dataIndex' => 'checkin_date', 'type' => 'date'],
             ['title' => 'Tanggal Checkout', 'dataIndex' => 'checkout_date', 'type' => 'date'],
-            ['title' => 'Status ', 'dataIndex' => 'status', 'type' => 'text'],
-            ['title' => 'Status Pembayaran', 'dataIndex' => 'status_payment', 'type' => 'text'],
+            ['title' => 'Status ', 'dataIndex' => 'status', 'type' => 'badge', 'options' => [
+                'badge' => [
+                    'value' => [
+                        'process' => [
+                            'color' => 'red',
+                            'label' => 'PROSES',
+                        ],
+                        'done' => [
+                            'color' => 'lightgreen',
+                            'label' => 'SELESAI',
+                        ]
+                    ],
+                ]
+            ]],
+            ['title' => 'Status Pembayaran', 'dataIndex' => 'payment_status', 'type' => 'badge', 'options' => [
+                'badge' => [
+                    'value' => [
+                        'process' => [
+                            'color' => 'red',
+                            'label' => 'PROSES',
+                        ],
+                        'done' => [
+                            'color' => 'lightgreen',
+                            'label' => 'SELESAI',
+                        ]
+                    ],
+                ]
+            ]],
             ['title' => 'Created At', 'dataIndex' => 'created_at', 'type' => 'timestamp'],
             ['title' => 'Updated At', 'dataIndex' => 'updated_at', 'type' => 'timestamp'],
         ];
@@ -499,9 +553,9 @@ class ReservationController extends BaseCRUDController
     protected function getUpdateOptions($model): object
     {
         return (object) [
-            'page_active_label' => 'Reservasi',
-            'page_title' => "Edit Reservasi `{$model->name}`",
-            'card_title' => "Form edit `{$model->name}`",
+            'page_active_label' => 'Edit',
+            'page_title' => "Edit Reservasi {$model->name}",
+            'card_title' => "Form edit {$model->name}",
             'browse_label' => 'Reservasi',
         ];
     }

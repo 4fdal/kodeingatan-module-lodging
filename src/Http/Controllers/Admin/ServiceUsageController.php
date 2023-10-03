@@ -32,7 +32,7 @@ class ServiceUsageController extends BaseCRUDController
                 'dataIndex' => 'reservations.customer_id',
                 'options' => [
                     'relation' => [
-                        'foreignKey' => 'service_usages.reservation_id'
+                        'foreign_key' => 'service_usages.reservation_id'
                     ]
                 ]
             ],
@@ -47,8 +47,24 @@ class ServiceUsageController extends BaseCRUDController
                     'field' => 'additional_services.name'
                 ],
                 'options' => [
-                    'relations' => [
-                        'foreignKey' => 'service_usages.additional_service_id'
+                    'relation' => [
+                        'foreign_key' => 'service_usages.additional_service_id'
+                    ]
+                ]
+            ],
+            [
+                'type' => 'relation',
+                'title' => 'Harga Layanan',
+                'dataIndex' => 'additional_services.price',
+                'key' => 'additional_services.price',
+                'order' => 'additional_services.price',
+                'search' => [
+                    'placeholder' => 'Search harga layanan...',
+                    'field' => 'additional_services.price'
+                ],
+                'options' => [
+                    'relation' => [
+                        'foreign_key' => 'service_usages.additional_service_id'
                     ]
                 ]
             ],
@@ -63,8 +79,8 @@ class ServiceUsageController extends BaseCRUDController
                     'field' => 'customers.name'
                 ],
                 'options' => [
-                    'relations' => [
-                        'foreignKey' => 'reservations.customer_id'
+                    'relation' => [
+                        'foreign_key' => 'reservations.customer_id'
                     ]
                 ]
             ],
@@ -151,14 +167,14 @@ class ServiceUsageController extends BaseCRUDController
                             'multiple' => false,
                             'field_selected' => [
                                 'value' => 'id',
-                                'label' => 'additional_services.name',
+                                'label' => 'name',
                             ],
                             'title' => 'Pilih layanan',
                             'columns' => ServiceController::getBrowseColumns(),
                             'form' => [
                                 'title' => [
                                     'create' => 'Tambahkan layanan baru',
-                                    'edit' => 'Edit layanan :additional_services.name'
+                                    'edit' => 'Edit layanan name'
                                 ],
                                 'fields' => ServiceController::formCreate()->fields,
                             ],
