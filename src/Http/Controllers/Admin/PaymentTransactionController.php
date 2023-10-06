@@ -12,7 +12,7 @@ class PaymentTransactionController extends BaseCRUDController
 {
     protected $base_model_class_name =  PaymentTransaction::class;
     protected $base_inertia_dir_path = "Admin/BaseCRUD/";
-    protected $as_route_group_name = 'customer.';
+    protected $as_route_group_name = 'payment_transaction.';
 
     protected function getBrowseOptions(): object
     {
@@ -23,7 +23,7 @@ class PaymentTransactionController extends BaseCRUDController
             'browse_label' => 'Transaksi Pembayaran',
         ];
     }
-    
+
     public static function getBrowseColumns(): array
     {
         return [
@@ -186,17 +186,17 @@ class PaymentTransactionController extends BaseCRUDController
                 ],
                 [
                     'type' => 'currency',
-                    'name' => 'total_const',
+                    'name' => 'total_cost',
                     'label' => 'Biaya Sewa',
                     'placeholder' => 'Biaya Sewa',
-                    'value' => null,
+                    'value' => 0,
                     'options' => [
                         'tooltip' => 'Biaya Sewa transaksi pembaran',
                         'currency' => [
                             'readonly' => true,
                             'value' => [
                                 'on_change' => 'reservation_id',
-                                'get_value ' => 'reservation_total_cost',
+                                'get_value' => 'reservation_total_cost',
                             ]
                         ]
                     ]
@@ -206,13 +206,13 @@ class PaymentTransactionController extends BaseCRUDController
                     'name' => 'tax',
                     'label' => 'Pajak Sewa',
                     'placeholder' => 'Pajak Sewa',
-                    'value' => null,
+                    'value' => 0,
                     'options' => [
                         'tooltip' => 'Pajak sewa transaksi pembaran',
                         'currency' => [
                             'readonly' => true,
                             'value' => [
-                                'on_change' => 'total_const',
+                                'on_change' => 'total_cost',
                                 'value' => ':total_cost * 2/100'
                             ]
                         ]
@@ -223,14 +223,14 @@ class PaymentTransactionController extends BaseCRUDController
                     'name' => 'total_bill',
                     'label' => 'Jumlah Tagihan',
                     'placeholder' => 'Jumlah Tagihan',
-                    'value' => null,
+                    'value' => 0,
                     'options' => [
                         'tooltip' => 'Jumlah tagihan transaksi pembaran',
                         'currency' => [
                             'readonly' => true,
                             'value' => [
                                 'on_change' => 'tax',
-                                'value' => ':total_cost - :tax'
+                                'value' => ':total_cost + :tax'
                             ]
                         ]
                     ]
@@ -431,10 +431,10 @@ class PaymentTransactionController extends BaseCRUDController
                 ],
                 [
                     'type' => 'currency',
-                    'name' => 'total_const',
+                    'name' => 'total_cost',
                     'label' => 'Biaya Sewa',
                     'placeholder' => 'Biaya Sewa',
-                    'value' => $model->total_const,
+                    'value' => $model->total_cost,
                     'options' => [
                         'tooltip' => 'Biaya Sewa pelanggan',
                         'currency' => [
@@ -457,7 +457,7 @@ class PaymentTransactionController extends BaseCRUDController
                         'currency' => [
                             'readonly' => true,
                             'value' => [
-                                'on_change' => 'total_const',
+                                'on_change' => 'total_cost',
                                 'value' => ':total_cost * 2/100'
                             ]
                         ]

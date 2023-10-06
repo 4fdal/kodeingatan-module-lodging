@@ -22,9 +22,26 @@ class ReservationController extends BaseCRUDController
         ];
     }
 
+    protected function paginateResultArray($paginate)
+    {
+
+        $paginate->data = $paginate->map(function (Reservation $reservation) {
+            $reservation->reservation_total_cost = $reservation->getTotalCost();
+            $reservation->reservation_tax_total_cost = $reservation->getTaxTotalCost();
+            $reservation->reservation_total_bill = $reservation->getTotalBill();
+            return $reservation;
+        });
+
+        return $paginate->toArray();
+    }
+
     public static function getBrowseColumns(): array
     {
         return [
+            [
+                'hidden' => true,
+                'dataIndex' => 'room_id',
+            ],
             [
                 'type' => 'relation',
                 'title' => 'Nama Pelanggan',
@@ -109,6 +126,42 @@ class ReservationController extends BaseCRUDController
                         ],
                     ]
                 ]
+            ],
+            [
+                'variable' => true,
+                'type' => 'currency',
+                'title' => 'Total Pembayaran',
+                'dataIndex' => 'reservation_total_cost',
+                'key' => 'reservation_total_cost',
+                'order' => 'reservation_total_cost',
+                'search' => [
+                    'placeholder' => 'Search pembayaran...',
+                    'field' => 'reservation_total_cost'
+                ],
+            ],
+            [
+                'variable' => true,
+                'type' => 'currency',
+                'title' => 'Total Pembayaran + Pajak',
+                'dataIndex' => 'reservation_tax_total_cost',
+                'key' => 'reservation_tax_total_cost',
+                'order' => 'reservation_tax_total_cost',
+                'search' => [
+                    'placeholder' => 'Search pembayaran...',
+                    'field' => 'reservation_tax_total_cost'
+                ],
+            ],
+            [
+                'variable' => true,
+                'type' => 'currency',
+                'title' => 'Total Pembayaran Bersil',
+                'dataIndex' => 'reservation_total_bill',
+                'key' => 'reservation_total_bill',
+                'order' => 'reservation_total_bill',
+                'search' => [
+                    'placeholder' => 'Search pembayaran...',
+                    'field' => 'reservation_total_bill'
+                ],
             ],
             [
                 'type' => 'badge',

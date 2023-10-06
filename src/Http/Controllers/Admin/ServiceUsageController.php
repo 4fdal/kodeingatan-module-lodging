@@ -27,7 +27,6 @@ class ServiceUsageController extends BaseCRUDController
     {
         return [
             [
-                'type' => 'relation',
                 'hidden' => true,
                 'dataIndex' => 'reservations.customer_id',
                 'options' => [
@@ -37,7 +36,6 @@ class ServiceUsageController extends BaseCRUDController
                 ]
             ],
             [
-                'type' => 'relation',
                 'title' => 'Nama Layanan Digunankan',
                 'dataIndex' => 'additional_services.name',
                 'key' => 'additional_services.name',
@@ -53,7 +51,7 @@ class ServiceUsageController extends BaseCRUDController
                 ]
             ],
             [
-                'type' => 'relation',
+                'type' => 'currency',
                 'title' => 'Harga Layanan',
                 'dataIndex' => 'additional_services.price',
                 'key' => 'additional_services.price',
@@ -289,7 +287,7 @@ class ServiceUsageController extends BaseCRUDController
             ]],
             ['title' => 'Layanan', 'dataIndex' => 'additional_service_id', 'type' => 'table_browse', 'options' => [
                 'table_browse' => [
-                    'columns' => ReservationController::getBrowseColumns(),
+                    'columns' => ServiceController::getBrowseColumns(),
                     'urls' => [
                         'browse' => ['GET', route('admin.additional_service.index', [
                             'select' => 'all',
@@ -365,14 +363,14 @@ class ServiceUsageController extends BaseCRUDController
                             'multiple' => false,
                             'field_selected' => [
                                 'value' => 'id',
-                                'label' => 'additional_services.name',
+                                'label' => 'name',
                             ],
                             'title' => 'Pilih layanan',
                             'columns' => ServiceController::getBrowseColumns(),
                             'form' => [
                                 'title' => [
                                     'create' => 'Tambahkan layanan baru',
-                                    'edit' => 'Edit layanan :additional_services.name'
+                                    'edit' => 'Edit layanan :name'
                                 ],
                                 'fields' => ServiceController::formCreate()->fields,
                             ],

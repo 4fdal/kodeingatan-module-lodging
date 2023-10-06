@@ -27,7 +27,7 @@ class Reservation extends Model
 
     public function room()
     {
-        return $this->belongsTo(Room::class, 'room_id', null);
+        return $this->belongsTo(Room::class, 'room_id');
     }
 
     public function serviceUsages()
@@ -53,6 +53,6 @@ class Reservation extends Model
 
     public function getTotalBill()
     {
-        return $this->getTotalCost() - $this->getTaxTotalCost();
+        return $this->getTotalCost() + $this->getTaxTotalCost();
     }
 }
