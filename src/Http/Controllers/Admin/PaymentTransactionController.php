@@ -65,7 +65,7 @@ class PaymentTransactionController extends BaseCRUDController
                 ]
             ],
             [
-                'type' => 'text',
+                'type' => 'badge',
                 'title' => 'Metode Pembayaran',
                 'dataIndex' => 'payment_method',
                 'key' => 'payment_method',
@@ -73,6 +73,20 @@ class PaymentTransactionController extends BaseCRUDController
                 'search' => [
                     'placeholder' => 'Search metode pembayaran...',
                     'field' => 'payment_method',
+                ],
+                'options' => [
+                    'badge' => [
+                        'value' => [
+                            'cash' => [
+                                'color' => 'green',
+                                'label' => 'TUNAI',
+                            ],
+                            'transfers' => [
+                                'color' => 'green',
+                                'label' => 'TRANSFER',
+                            ]
+                        ],
+                    ]
                 ]
             ],
             [
@@ -160,7 +174,7 @@ class PaymentTransactionController extends BaseCRUDController
                 ],
                 [
                     'type' => 'date',
-                    'name' => 'transaction_data',
+                    'name' => 'transaction_date',
                     'label' => 'Tanggal transaksi',
                     'placeholder' => 'Tanggal transaksi',
                     'value' => null,
@@ -173,7 +187,7 @@ class PaymentTransactionController extends BaseCRUDController
                     'name' => 'payment_method',
                     'label' => 'Metode pembayaran',
                     'placeholder' => 'Metode pembayaran',
-                    'value' => null,
+                    'value' => 'cash',
                     'options' => [
                         'tooltip' => 'Metode pembayaran transaksi pembaran',
                         'select' => [
@@ -277,9 +291,9 @@ class PaymentTransactionController extends BaseCRUDController
         $room = $reservation->room;
         if (!isset($room)) throw new Exception("Kamar tidak ditemukan");
 
-        $data['total_cost'] = $this->getTotalCost();
-        $data['tax'] = $this->getTaxTotalCost();
-        $data['total_bill'] = $this->getTotalBill();
+        $data['total_cost'] = $reservation->getTotalCost();
+        $data['tax'] = $reservation->getTaxTotalCost();
+        $data['total_bill'] = $reservation->getTotalBill();
 
         return $data;
     }
@@ -314,9 +328,9 @@ class PaymentTransactionController extends BaseCRUDController
         $room = $reservation->room;
         if (!isset($room)) throw new Exception("Kamar tidak ditemukan");
 
-        $data['total_cost'] = $this->getTotalCost();
-        $data['tax'] = $this->getTaxTotalCost();
-        $data['total_bill'] = $this->getTotalBill();
+        $data['total_cost'] = $reservation->getTotalCost();
+        $data['tax'] = $reservation->getTaxTotalCost();
+        $data['total_bill'] = $reservation->getTotalBill();
 
         return $data;
     }
@@ -352,8 +366,21 @@ class PaymentTransactionController extends BaseCRUDController
                     ]
                 ]
             ]],
-            ['title' => 'Tanggal Transksi', 'dataIndex' => 'transaction_data', 'type' => 'data'],
-            ['title' => 'Metode Pembayaran', 'dataIndex' => 'payment_method', 'type' => 'text'],
+            ['title' => 'Tanggal Transksi', 'dataIndex' => 'transaction_date', 'type' => 'date'],
+            ['title' => 'Metode Pembayaran', 'dataIndex' => 'payment_method', 'type' => 'badge', 'options' => [
+                'badge' => [
+                    'value' => [
+                        'cash' => [
+                            'color' => 'green',
+                            'label' => 'TUNAI',
+                        ],
+                        'transfers' => [
+                            'color' => 'green',
+                            'label' => 'TRANSFER',
+                        ]
+                    ],
+                ]
+            ]],
             ['title' => 'Total Biaya', 'dataIndex' => 'total_cost', 'type' => 'currency'],
             ['title' => 'Pajak Pph(2%)', 'dataIndex' => 'tax', 'type' => 'currency'],
             ['title' => 'Jumlag Tagihan', 'dataIndex' => 'total_bill', 'type' => 'currency'],
@@ -405,10 +432,10 @@ class PaymentTransactionController extends BaseCRUDController
                 ],
                 [
                     'type' => 'date',
-                    'name' => 'transaction_data',
+                    'name' => 'transaction_date',
                     'label' => 'Tanggal transaksi',
                     'placeholder' => 'Tanggal transaksi',
-                    'value' => $model->transaction_data,
+                    'value' => $model->transaction_date,
                     'options' => [
                         'tooltip' => 'Tanggal transaksi pelanggan'
                     ]

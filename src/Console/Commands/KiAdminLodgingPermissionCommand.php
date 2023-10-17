@@ -31,7 +31,7 @@ class KiAdminLodgingPermissionCommand extends Command
         $email = $this->option('email');
         $role_name  = $this->option('role');
 
-        \App\Console\Commands\KiAdminPermissionCommand::make($email, $role_name, 'customer,room_type,room,reservation,additional_service,service_usage,payment_transaction');
+        \App\Console\Commands\KiAdminPermissionCommand::make($email, $role_name, 'customer,room_type,room,reservation,additional_service,service_usage,payment_transaction,room_reservation');
     }
 
     static function make($email, $role_name)

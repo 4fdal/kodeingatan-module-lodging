@@ -29,6 +29,6 @@ class ServiceUsage extends Model
 
     public function getTotalServiceCost()
     {
-        return $this->additional_service->price * $this->number_of_uses;
+        return $this->additionService->price * $this->number_of_uses;
     }
 }

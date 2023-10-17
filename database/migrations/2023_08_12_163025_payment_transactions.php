@@ -27,7 +27,7 @@ return new class extends Migration
             $table->timestamps();
             $table->timestamp('deleted_at')->nullable();
 
-            $table->foreign('reservation_id')->references('id')->on('reservasions');
+            $table->foreign('reservation_id')->references('id')->on('reservations');
         });
     }
 

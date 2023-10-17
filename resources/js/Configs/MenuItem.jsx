@@ -10,6 +10,15 @@ export default [
     add_active_route: ['admin.master'],
     children: [
       {
+        icon: <MinusOutlined />,
+        key: 'admin.room_reservation.index',
+        permission: 'room_reservation.browse',
+        label: 'Penyewaan Kamar',
+        title: 'Penyewaan Kamar',
+        as: 'admin.room_reservation.',
+        add_active_route: [],
+      },
+      {
         key: 'admin.master',
         label: 'Master',
         title: 'Master',
